@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ user.name }} | Engineering Showcase</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .project-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.4) !important;
+      box-shadow: 0 20px 40px -10px rgba(56, 189, 248, 0.18);
+    }
+    .badge-core {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .badge-tool {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .hero-avatar-wrapper {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 20px auto;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      box-shadow: 0 10px 30px rgba(56, 189, 248, 0.35);
+      position: relative;
+    }
+    .hero-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #0f172a;
+    }
+  </style>
+</head>
+<body class="py-0">
+
+  <div class="ambient-glow" id="cursorGlow"></div>
+
+  <!-- Top Glass Navigation -->
+  <nav class="glass-panel sticky-top mx-3 mt-3 px-4 py-3 rounded-4" style="z-index: 100;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center gap-3">
+        <span class="fs-5 fw-bold text-gradient">{{ user.name }}</span>
+        <span class="d-none d-md-inline-block badge bg-dark border border-secondary text-info rounded-pill px-3 py-2 small">
+          <span class="pulse-dot me-1"></span> Available for Opportunities
+        </span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        {% if user.email %}<a href="mailto:{{ user.email }}" class="btn btn-sm btn-outline-info rounded-pill px-3">📧 Email</a>{% endif %}
+        {% if user.github %}<a href="{{ user.github }}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-3">🐙 GitHub</a>{% endif %}
+        {% if user.linkedin %}<a href="{{ user.linkedin }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-3">💼 LinkedIn</a>{% endif %}
+        <button onclick="window.print()" class="btn btn-sm btn-premium rounded-pill px-3 ms-2">📄 Export</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Dynamic 3D Avatar -->
+  <header class="py-5 text-center position-relative my-3" style="z-index: 2;">
+    <div class="container">
+      
+      <div class="hero-avatar-wrapper">
+        {% if user.gender == 'female' %}
+          <img src="{{ url_for('static', filename='female.png') }}" class="hero-avatar-img" alt="Female Avatar">
+        {% else %}
+          <img src="{{ url_for('static', filename='male.png') }}" class="hero-avatar-img" alt="Male Avatar">
+        {% endif %}
+      </div>
+
+      <h1 class="display-3 fw-extrabold text-white mb-2">{{ user.name }}</h1>
+      {% if user.tagline %}
+      <p class="fs-4 text-gradient fw-semibold mb-3">{{ user.tagline }}</p>
+      {% endif %}
+      <p class="text-info fs-6 mb-4">{{ user.education_degree }} • {{ user.education_college }} ({{ user.education_year }})</p>
+      
+      {% if user.bio %}
+      <div class="glass-panel p-4 mx-auto text-start mb-5" style="max-width: 820px;">
+        <p class="text-white mb-0 fs-6" style="line-height: 1.8;">{{ user.bio }}</p>
+      </div>
+      {% endif %}
+
+      <div class="row justify-content-center g-3">
+        <div class="col-6 col-md-3">
+          <div class="glass-panel p-3 text-center">
+            <h3 class="fw-bold text-info mb-0">{{ projects|length }}</h3>
+            <small class="text-muted text-uppercase fw-semibold">Key Projects</small>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="glass-panel p-3 text-center">
+            <h3 class="fw-bold mb-0" style="color: #c084fc;">{{ core_skills|length + tools|length }}</h3>
+            <small class="text-muted text-uppercase fw-semibold">Tech Stacks</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pb-5 position-relative" style="z-index: 2;">
+    
+    <section class="mb-5">
+      <div class="glass-panel p-4 p-md-5">
+        <h4 class="text-white fw-bold mb-4 text-center">Core Technical Matrix</h4>
+        <div class="text-center mb-4">
+          <p class="text-info small text-uppercase fw-bold mb-2">Languages & Frameworks</p>
+          {% for s in core_skills %}
+            <span class="badge badge-core p-2 px-3 rounded-pill m-1 fs-6">{{ s }}</span>
+          {% endfor %}
+        </div>
+        {% if tools %}
+        <div class="text-center">
+          <p class="text-muted small text-uppercase fw-bold mb-2">Tools & Environments</p>
+          {% for t in tools %}
+            <span class="badge badge-tool p-2 px-3 rounded-pill m-1 fs-6">{{ t }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    {% if projects %}
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <h3 class="fw-bold text-white mb-0">Featured Engineering Projects</h3>
+        <input type="text" id="projectSearch" class="form-control w-auto" placeholder="🔍 Search projects or stack..." onkeyup="filterProjects()">
+      </div>
+
+      <div class="row g-4" id="projectGrid">
+        {% for p in projects %}
+        <div class="col-md-6 project-item" data-title="{{ p.title|lower }}" data-tech="{{ p.tech|lower }}">
+          <div class="glass-panel project-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h4 class="text-white fw-bold mb-0">{{ p.title }}</h4>
+                {% if p.link %}
+                <a href="{{ p.link }}" target="_blank" class="badge bg-info text-dark text-decoration-none px-3 py-2 rounded-pill">View Live ↗</a>
+                {% endif %}
+              </div>
+              <p class="text-info small fw-semibold mb-3">{{ p.tech }}</p>
+              <p class="text-white mb-0" style="white-space: pre-line; line-height: 1.7;">{{ p.desc }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if experiences %}
+    <section class="mb-5">
+      <h3 class="fw-bold text-white mb-4 text-center">Experience & Roles</h3>
+      <div class="row justify-content-center">
+        <div class="col-lg-9">
+          {% for exp in experiences %}
+          <div class="glass-panel p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <h5 class="text-white fw-bold mb-0">{{ exp.role }} <span class="text-gradient">@ {{ exp.org }}</span></h5>
+              <span class="badge bg-dark border border-secondary text-info px-3 py-2">{{ exp.duration }}</span>
+            </div>
+            {% if exp.detail %}
+            <p class="text-white mt-3 mb-0" style="white-space: pre-line; line-height: 1.7;">{{ exp.detail }}</p>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if certificates %}
+    <section class="mb-5">
+      <h3 class="fw-bold text-white mb-4 text-center">Accreditations & Certificates</h3>
+      <div class="row justify-content-center g-3">
+        {% for c in certificates %}
+        <div class="col-md-5">
+          <div class="glass-panel p-4 text-center">
+            <h6 class="text-white fw-bold mb-1">{{ c.name }}</h6>
+            <small class="text-info">{{ c.issuer }}</small>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+  </main>
+
+  <footer class="text-center py-5 text-muted border-top border-secondary position-relative" style="z-index: 2;">
+    <p class="mb-0">Powered by PortGenZ Studio Architecture • {{ user.name }} © 2026</p>
+  </footer>
+
+  <script>
+    const glow = document.getElementById('cursorGlow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    function filterProjects() {
+      const q = document.getElementById('projectSearch').value.toLowerCase();
+      const items = document.querySelectorAll('.project-item');
+      items.forEach(el => {
+        const title = el.getAttribute('data-title');
+        const tech = el.getAttribute('data-tech');
+        if (title.includes(q) || tech.includes(q)) {
+          el.style.display = 'block';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

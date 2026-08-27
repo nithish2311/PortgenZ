@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ user.name }} | Dev Terminal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { 
+      background-color: #0d1117; 
+      color: #c9d1d9; 
+      font-family: 'Courier New', Courier, monospace; 
+      line-height: 1.8;
+    }
+    .terminal-container { 
+      max-width: 900px; 
+      margin: 40px auto; 
+    }
+    .terminal-box { 
+      background-color: #161b22; 
+      border: 1px solid #30363d; 
+      border-radius: 10px; 
+      padding: 40px; 
+    }
+    .text-green { color: #2ea043; }
+    .tag { 
+      background: #21262d; 
+      border: 1px solid #30363d; 
+      color: #58a6ff; 
+      padding: 6px 12px; 
+      border-radius: 4px; 
+      margin: 4px; 
+      display: inline-block; 
+    }
+    .top-links a { 
+      color: #58a6ff; 
+      text-decoration: none; 
+      border: 1px solid #30363d; 
+      padding: 5px 12px; 
+      border-radius: 6px; 
+      margin-left: 8px; 
+    }
+    .top-links a:hover { 
+      background-color: #21262d; 
+      border-color: #58a6ff; 
+    }
+    .section-divider { 
+      margin: 45px 0; 
+      border-color: #30363d; 
+    }
+    .project-card { 
+      background: #0d1117; 
+      border: 1px solid #30363d; 
+      border-radius: 6px; 
+      padding: 24px; 
+      margin-bottom: 20px; 
+    }
+  </style>
+</head>
+<body class="py-4">
+
+  <div class="terminal-container">
+    <div class="terminal-box shadow-lg">
+      
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <span class="text-secondary">// session active: bash-5.2</span>
+        <div class="top-links">
+          {% if user.email %}<a href="mailto:{{ user.email }}">email</a>{% endif %}
+          {% if user.github %}<a href="{{ user.github }}" target="_blank">github</a>{% endif %}
+          {% if user.linkedin %}<a href="{{ user.linkedin }}" target="_blank">linkedin</a>{% endif %}
+        </div>
+      </div>
+
+      <h1 class="text-green fw-bold mb-2">$ whoami -> {{ user.name }}</h1>
+      <p class="text-light mb-3">{{ user.education_degree }} • {{ user.education_college }}</p>
+      
+      {% if user.bio %}
+      <p class="text-secondary border-start border-success ps-3 my-4">{{ user.bio }}</p>
+      {% endif %}
+
+      <hr class="section-divider">
+
+      <h4 class="text-green mb-3">$ cat /skills.json</h4>
+      <div class="mb-3">
+        {% for skill in core_skills %}
+          <span class="tag">{{ skill }}</span>
+        {% endfor %}
+        {% for tool in tools %}
+          <span class="tag text-light">{{ tool }}</span>
+        {% endfor %}
+      </div>
+
+      {% if projects %}
+      <hr class="section-divider">
+      <h4 class="text-green mb-4">$ ./list-featured-projects.sh</h4>
+      {% for p in projects %}
+      <div class="project-card">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="text-white fw-bold mb-0">{{ p.title }}</h5>
+          {% if p.link %}
+          <a href="{{ p.link }}" target="_blank" class="small text-info">[source_code]</a>
+          {% endif %}
+        </div>
+        <p class="text-secondary small mb-3">Stack: {{ p.tech }}</p>
+        <p class="text-light mb-0" style="white-space: pre-line;">{{ p.desc }}</p>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if experiences %}
+      <hr class="section-divider">
+      <h4 class="text-green mb-4">$ history --grep="experience"</h4>
+      {% for exp in experiences %}
+      <div class="project-card">
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <h6 class="text-white fw-bold mb-0">{{ exp.role }} @ {{ exp.org }}</h6>
+          <span class="text-secondary small">{{ exp.duration }}</span>
+        </div>
+        {% if exp.detail %}
+        <p class="text-secondary small mt-2 mb-0" style="white-space: pre-line;">{{ exp.detail }}</p>
+        {% endif %}
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <p class="text-secondary small mt-5 mb-0">// terminal exit code 0 • Generated via PortGenZ</p>
+    </div>
+  </div>
+
+</body>
+</html>

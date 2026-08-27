@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PortGenZ Studio – Next-Gen Engine</title>
+  
+  <!-- PWA & App Icons -->
+  <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='app_logo.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='app_logo.png') }}">
+  <meta name="theme-color" content="#0f172a">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <style>
+    .avatar-select-card {
+      cursor: pointer;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 12px;
+      transition: all 0.25s ease;
+      background: rgba(15, 23, 42, 0.6);
+      text-align: center;
+    }
+    .avatar-select-card:hover {
+      border-color: #38bdf8;
+      transform: translateY(-3px);
+    }
+    .avatar-radio:checked + .avatar-select-card {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    }
+    .avatar-preview-img {
+      width: 65px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body class="py-5">
+
+  <div class="ambient-glow" id="cursorGlow"></div>
+
+  <div class="container position-relative" style="z-index: 2;">
+    
+    <!-- Clean Main Header -->
+    <div class="text-center mb-5">
+      <div class="d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill glass-panel mb-3">
+        <span class="pulse-dot"></span>
+        <span class="text-info fw-bold text-uppercase tracking-wider small">v2.5 Live Architecture</span>
+      </div>
+      <h1 class="display-4 fw-extrabold text-gradient mb-2">PortGenZ Studio Next-Gen Engine</h1>
+      <p class="text-light fs-6">AI-assisted portfolio builder with real-time profile rendering</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <form action="/save" method="POST" class="glass-panel p-4 p-md-5">
+          
+          <!-- Section 1 -->
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">01</span>
+            <h4 class="fw-bold mb-0 text-white">Identity & Avatar</h4>
+          </div>
+
+          <!-- Avatar / Gender Selection -->
+          <div class="mb-4">
+            <label class="form-label small text-info text-uppercase fw-bold mb-2">Choose Avatar Persona *</label>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input class="d-none avatar-radio" type="radio" name="gender" id="male" value="male" checked>
+                <label class="avatar-select-card d-flex align-items-center gap-3 w-100" for="male">
+                  <img src="{{ url_for('static', filename='male.png') }}" class="avatar-preview-img" alt="Male Avatar">
+                  <div class="text-start">
+                    <h6 class="text-white fw-bold mb-0">Male Persona</h6>
+                    <small class="text-muted">3D Developer Avatar</small>
+                  </div>
+                </label>
+              </div>
+              <div class="col-md-6">
+                <input class="d-none avatar-radio" type="radio" name="gender" id="female" value="female">
+                <label class="avatar-select-card d-flex align-items-center gap-3 w-100" for="female">
+                  <img src="{{ url_for('static', filename='female.png') }}" class="avatar-preview-img" alt="Female Avatar">
+                  <div class="text-start">
+                    <h6 class="text-white fw-bold mb-0">Female Persona</h6>
+                    <small class="text-muted">3D Engineering Avatar</small>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <label class="form-label small text-info text-uppercase fw-bold">Full Name *</label>
+              <input type="text" name="name" class="form-control" placeholder="e.g. Nithishkumar L" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small text-info text-uppercase fw-bold">Headline / Career Tagline</label>
+              <input type="text" name="tagline" class="form-control" placeholder="e.g. CS Undergrad | Systems & Web Architecture">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-info text-uppercase fw-bold">Email Address *</label>
+              <input type="email" name="email" class="form-control" placeholder="nithish@example.com" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-info text-uppercase fw-bold">GitHub Profile URL</label>
+              <input type="url" name="github" class="form-control" placeholder="https://github.com/handle">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-info text-uppercase fw-bold">LinkedIn Profile URL</label>
+              <input type="url" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/handle">
+            </div>
+            <div class="col-12">
+              <label class="form-label small text-info text-uppercase fw-bold">Executive Bio</label>
+              <textarea name="bio" class="form-control" rows="3" placeholder="A concise professional narrative describing your engineering focus and technical passions..."></textarea>
+            </div>
+          </div>
+
+          <!-- Section 2 -->
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">02</span>
+            <h4 class="fw-bold mb-0 text-white">Academics & Stack Matrix</h4>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <div class="col-md-5">
+              <label class="form-label small text-info text-uppercase fw-bold">Degree & Major</label>
+              <input type="text" name="education_degree" class="form-control" placeholder="B.E. Computer Science & Engineering">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-info text-uppercase fw-bold">Institution</label>
+              <input type="text" name="education_college" class="form-control" placeholder="College / University Name">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small text-info text-uppercase fw-bold">Tenure / Year</label>
+              <input type="text" name="education_year" class="form-control" placeholder="2023 - 2027">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small text-info text-uppercase fw-bold">Core Languages & Frameworks (CSV)</label>
+              <input type="text" name="skills_core" class="form-control" placeholder="C, Python, JavaScript, Flask, SQLite">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small text-info text-uppercase fw-bold">Tooling & Environments (CSV)</label>
+              <input type="text" name="skills_tools" class="form-control" placeholder="Git, GitHub, Linux, VS Code, Netlify">
+            </div>
+          </div>
+
+          <!-- Section 3 -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">03</span>
+              <h4 class="fw-bold mb-0 text-white">Featured Projects</h4>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="addProjectField()">+ Add Project</button>
+          </div>
+
+          <div id="projects-container" class="mb-5">
+            <div class="glass-panel p-4 mb-3 project-block">
+              <div class="row g-3 mb-3">
+                <div class="col-md-5"><input type="text" name="project_title[]" class="form-control" placeholder="Project Name"></div>
+                <div class="col-md-4"><input type="text" name="project_tech[]" class="form-control" placeholder="Stack (e.g. Node.js, Web Audio API)"></div>
+                <div class="col-md-3"><input type="url" name="project_link[]" class="form-control" placeholder="GitHub / Live URL"></div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="form-label small text-muted mb-0">Project Impact & Architecture</label>
+                <button type="button" class="btn btn-sm btn-ai-glow px-3" onclick="enhanceDynamic(this)">✨ Enhance with AI</button>
+              </div>
+              <textarea name="project_desc[]" class="form-control ai-target" rows="3" placeholder="Brief points of what you engineered..."></textarea>
+            </div>
+          </div>
+
+          <!-- Section 4 -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">04</span>
+              <h4 class="fw-bold mb-0 text-white">Experience & Roles</h4>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="addExperienceField()">+ Add Experience</button>
+          </div>
+
+          <div id="experience-container" class="mb-5">
+            <div class="glass-panel p-4 mb-3">
+              <div class="row g-3 mb-3">
+                <div class="col-md-5"><input type="text" name="exp_role[]" class="form-control" placeholder="Role (e.g. Software Intern)"></div>
+                <div class="col-md-4"><input type="text" name="exp_org[]" class="form-control" placeholder="Company / Organization"></div>
+                <div class="col-md-3"><input type="text" name="exp_duration[]" class="form-control" placeholder="Duration (e.g. May 2025 - Jul 2025)"></div>
+              </div>
+              <textarea name="exp_detail[]" class="form-control" rows="2" placeholder="Key contributions and achievements..."></textarea>
+            </div>
+          </div>
+
+          <!-- Section 5 -->
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">05</span>
+              <h4 class="fw-bold mb-0 text-white">Accreditations & Honors</h4>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-info rounded-pill px-3" onclick="addCertField()">+ Add Certificate</button>
+          </div>
+
+          <div id="cert-container" class="mb-5">
+            <div class="row g-3 mb-3">
+              <div class="col-md-7"><input type="text" name="cert_name[]" class="form-control" placeholder="Certificate Title"></div>
+              <div class="col-md-5"><input type="text" name="cert_issuer[]" class="form-control" placeholder="Issuing Body (e.g. NPTEL / Cisco)"></div>
+            </div>
+          </div>
+
+          <!-- Section 6 -->
+          <div class="d-flex align-items-center gap-2 mb-4">
+            <span class="badge bg-info text-dark rounded-circle p-2 px-3 fw-bold">06</span>
+            <h4 class="fw-bold mb-0 text-white">Visual Presentation Theme</h4>
+          </div>
+
+          <div class="row g-4 mb-5">
+            <div class="col-md-6">
+              <div class="glass-panel p-4">
+                <input class="form-check-input me-2" type="radio" name="theme" id="theme1" value="theme_modern" checked>
+                <label class="form-check-label fw-bold text-white" for="theme1">
+                  Aura Glassmorphism (Modern Gradients, Live Search & Stats)
+                </label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="glass-panel p-4">
+                <input class="form-check-input me-2" type="radio" name="theme" id="theme2" value="theme_developer">
+                <label class="form-check-label fw-bold text-white" for="theme2">
+                  Cyber Terminal (Dark Command HUD)
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-premium btn-lg w-100 py-3 fs-5">🚀 Build & Launch Live Portfolio</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const glow = document.getElementById('cursorGlow');
+    window.addEventListener('mousemove', (e) => {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+    });
+
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+
+    function addProjectField() {
+      const container = document.getElementById('projects-container');
+      const div = document.createElement('div');
+      div.className = 'glass-panel p-4 mb-3 project-block';
+      div.innerHTML = `
+        <div class="row g-3 mb-3">
+          <div class="col-md-5"><input type="text" name="project_title[]" class="form-control" placeholder="Project Name"></div>
+          <div class="col-md-4"><input type="text" name="project_tech[]" class="form-control" placeholder="Stack"></div>
+          <div class="col-md-3"><input type="url" name="project_link[]" class="form-control" placeholder="Link"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label class="form-label small text-muted mb-0">Impact</label>
+          <button type="button" class="btn btn-sm btn-ai-glow px-3" onclick="enhanceDynamic(this)">✨ Enhance with AI</button>
+        </div>
+        <textarea name="project_desc[]" class="form-control ai-target" rows="3" placeholder="Impact points..."></textarea>
+      `;
+      container.appendChild(div);
+    }
+
+    function addExperienceField() {
+      const container = document.getElementById('experience-container');
+      const div = document.createElement('div');
+      div.className = 'glass-panel p-4 mb-3';
+      div.innerHTML = `
+        <div class="row g-3 mb-3">
+          <div class="col-md-5"><input type="text" name="exp_role[]" class="form-control" placeholder="Role"></div>
+          <div class="col-md-4"><input type="text" name="exp_org[]" class="form-control" placeholder="Company"></div>
+          <div class="col-md-3"><input type="text" name="exp_duration[]" class="form-control" placeholder="Duration"></div>
+        </div>
+        <textarea name="exp_detail[]" class="form-control" rows="2" placeholder="Responsibilities..."></textarea>
+      `;
+      container.appendChild(div);
+    }
+
+    function addCertField() {
+      const container = document.getElementById('cert-container');
+      const div = document.createElement('div');
+      div.className = 'row g-3 mb-3';
+      div.innerHTML = `
+        <div class="col-md-7"><input type="text" name="cert_name[]" class="form-control" placeholder="Certificate Title"></div>
+        <div class="col-md-5"><input type="text" name="cert_issuer[]" class="form-control" placeholder="Issuer"></div>
+      `;
+      container.appendChild(div);
+    }
+
+    async function enhanceDynamic(btn) {
+      const block = btn.closest('.project-block');
+      const box = block.querySelector('.ai-target');
+      const text = box.value.trim();
+
+      if (!text) {
+        alert('Please enter a draft first!');
+        return;
+      }
+
+      btn.innerText = '✨ Polishing...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/enhance', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({text: text})
+        });
+        const data = await res.json();
+        if (data.enhanced) {
+          box.value = data.enhanced;
+        } else {
+          alert('AI Note: ' + (data.error || 'Check API connectivity'));
+        }
+      } catch(err) {
+        alert('Error connecting to backend.');
+      } finally {
+        btn.innerText = '✨ Enhance with AI';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  --card-bg: rgba(30, 41, 59, 0.75);
+  --card-border: rgba(255, 255, 255, 0.15);
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #818cf8;
+  --accent-purple: #c084fc;
+  --text-main: #ffffff;
+  --text-muted: #cbd5e1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fluid Ambient Glow */
+.ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: clamp(300px, 45vw, 600px);
+  height: clamp(300px, 45vw, 600px);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.18) 0%, rgba(129, 140, 248, 0.1) 45%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  transition: width 0.2s, height 0.2s;
+}
+
+/* Translucent Glass Panels */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: clamp(14px, 2vw, 20px);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 1;
+}
+
+/* Dynamic Gradients */
+.text-gradient {
+  background: linear-gradient(135deg, #38bdf8 0%, #a5b4fc 50%, #f472b6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Fluid Typography */
+.display-3 {
+  font-size: clamp(2rem, 5vw + 1rem, 3.8rem) !important;
+}
+
+.display-4 {
+  font-size: clamp(1.75rem, 4vw + 0.8rem, 3rem) !important;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  background: rgba(15, 23, 42, 0.7) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #ffffff !important;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  transition: all 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: #64748b;
+}
+
+.form-control:focus {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.3) !important;
+  background: rgba(15, 23, 42, 0.9) !important;
+}
+
+/* Pulsing Status Dot */
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8);
+  animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.8); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+
+/* Interactive Buttons */
+.btn-premium {
+  background: linear-gradient(135deg, #0284c7, #6366f1);
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.5);
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+.btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -4px rgba(99, 102, 241, 0.6);
+  color: #ffffff;
+}
+
+.btn-ai-glow {
+  background: rgba(129, 140, 248, 0.15);
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  color: #c7d2fe;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.btn-ai-glow:hover {
+  background: linear-gradient(135deg, #6366f1, #38bdf8);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+}
+
+/* ====================================================
+   MOBILE & TABLET RESPONSIVE ENGINE (PWA/Mobile Ready)
+   ==================================================== */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 20px;
+  }
+
+  .container, .container-fluid {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  /* Compact Hero Avatar on Mobile */
+  .hero-avatar-wrapper {
+    width: 100px !important;
+    height: 100px !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* Navigation: Stack cleanly on mobile screens */
+  nav.glass-panel {
+    margin: 8px !important;
+    padding: 12px 14px !important;
+  }
+
+  nav.glass-panel .container-fluid {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav.glass-panel .btn {
+    padding: 5px 10px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Touch-Friendly Form Padding */
+  .glass-panel {
+    padding: 18px 14px !important;
+  }
+
+  /* Badges & Tags */
+  .badge {
+    font-size: 0.85rem !important;
+    padding: 6px 12px !important;
+    margin: 3px !important;
+  }
+
+  /* Ambient Glow reduction for smooth mobile GPU performance */
+  .ambient-glow {
+    display: none;
+  }
+}
