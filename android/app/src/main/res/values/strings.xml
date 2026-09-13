@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PortGenZ</string>
+    <string name="default_server_url">http://192.168.1.5:5000</string>
+    <string name="retry">Retry Connection</string>
+    <string name="server_settings">Server Settings</string>
+    <string name="change_url_title">Server Configuration</string>
+    <string name="change_url_desc">Select a preset or enter the address where PortGenZ Flask is running:</string>
+    <string name="save">Save &amp; Connect</string>
+    <string name="cancel">Cancel</string>
+    <string name="home">Home</string>
+    <string name="share">Share</string>
+    <string name="export_pdf">Export PDF</string>
+    <string name="error_connecting">Unable to connect to PortGenZ server</string>
+    <string name="error_hint">Make sure Flask backend is running on your computer:\npython app.py\n\nEnsure your phone and computer are on the same Wi-Fi network.</string>
+</resources>

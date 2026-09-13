@@ -1,0 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --bg-gradient: linear-gradient(135deg, #240509 0%, #3D0B13 50%, #240509 100%);
+  --card-bg: rgba(61, 11, 19, 0.82);
+  --card-border: rgba(251, 191, 36, 0.22);
+  --accent-gold: #FBBF24;
+  --accent-amber: #F59E0B;
+  --accent-rose: #FB7185;
+  --accent-crimson: #E11D48;
+  --text-main: #FFF1F2;
+  --text-muted: #FECDD3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  position: relative;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  padding-bottom: 40px;
+}
+
+/* Translucent Glass Panels */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1;
+}
+
+/* Dynamic Gradients */
+.text-gradient {
+  background: linear-gradient(135deg, #FBBF24 0%, #FB7185 50%, #F59E0B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Typography */
+.display-3 {
+  font-size: clamp(2rem, 5vw + 1rem, 3.2rem) !important;
+  font-weight: 800;
+}
+
+.display-4 {
+  font-size: clamp(1.75rem, 4vw + 0.8rem, 2.6rem) !important;
+  font-weight: 800;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  background: rgba(36, 5, 9, 0.85) !important;
+  border: 1px solid rgba(251, 191, 36, 0.25) !important;
+  color: #FFF1F2 !important;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-control::placeholder {
+  color: #A37078;
+}
+
+.form-control:focus {
+  border-color: #FBBF24 !important;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.35) !important;
+  background: rgba(45, 8, 14, 0.95) !important;
+}
+
+/* Pulsing Status Dot */
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FBBF24;
+  box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.8);
+  animation: pulse-gold 2s infinite;
+}
+
+@keyframes pulse-gold {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.8); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+/* Interactive Buttons */
+.btn-premium {
+  background: linear-gradient(135deg, #881337, #D97706);
+  border: none;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px -4px rgba(217, 119, 6, 0.5);
+  font-size: 1.05rem;
+}
+
+.btn-premium:hover, .btn-premium:active {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px -4px rgba(245, 158, 11, 0.6);
+  color: #ffffff;
+}
+
+.btn-ai-glow {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  color: #FBBF24;
+  font-weight: 600;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.btn-ai-glow:hover, .btn-ai-glow:active {
+  background: linear-gradient(135deg, #881337, #FBBF24);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+}
+
+/* Project & Experience Cards */
+.project-card, .exp-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(61, 11, 19, 0.8);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  border-radius: 16px;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  box-shadow: 0 16px 32px -8px rgba(251, 191, 36, 0.25);
+}
+
+.badge-core {
+  background: rgba(251, 191, 36, 0.18);
+  color: #FBBF24;
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-weight: 600;
+}
+
+.badge-tool {
+  background: rgba(255, 241, 242, 0.1);
+  color: #FECDD3;
+  border: 1px solid rgba(255, 241, 242, 0.2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-weight: 500;
+}
+
+.hero-avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(135deg, #FBBF24, #FB7185, #881337);
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.35);
+  position: relative;
+}
+
+.hero-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #240509;
+}

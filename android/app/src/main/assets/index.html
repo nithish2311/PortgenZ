@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PortGenZ Studio</title>
+  
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    body {
+      background: #240509;
+      background: radial-gradient(circle at 50% 0%, #3D0B13 0%, #240509 100%);
+      color: #FFF1F2;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 12px 14px 70px 14px;
+      margin: 0;
+    }
+
+    .avatar-select-card {
+      cursor: pointer;
+      border: 2px solid rgba(251, 191, 36, 0.2);
+      border-radius: 14px;
+      padding: 12px;
+      transition: all 0.2s ease;
+      background: rgba(36, 5, 9, 0.7);
+      text-align: center;
+      width: 100%;
+    }
+    .avatar-radio:checked + .avatar-select-card {
+      border-color: #FBBF24;
+      background: rgba(251, 191, 36, 0.15);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.35);
+    }
+    .avatar-preview-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(251, 191, 36, 0.3);
+      margin-bottom: 6px;
+    }
+
+    .section-badge {
+      background: #FBBF24;
+      color: #240509;
+      font-weight: 800;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .theme-card {
+      cursor: pointer;
+      border: 2px solid rgba(251, 191, 36, 0.2);
+      border-radius: 14px;
+      padding: 14px;
+      background: rgba(36, 5, 9, 0.7);
+      transition: all 0.2s;
+    }
+    .theme-radio:checked + .theme-card {
+      border-color: #FBBF24;
+      background: rgba(251, 191, 36, 0.12);
+      box-shadow: 0 0 16px rgba(251, 191, 36, 0.3);
+    }
+
+    .cyber-mode {
+      background: #0d1117 !important;
+      color: #39d353 !important;
+      font-family: monospace !important;
+    }
+    .cyber-mode .glass-panel {
+      background: rgba(13, 17, 23, 0.9) !important;
+      border: 1px solid #238636 !important;
+    }
+    .cyber-mode .badge-core {
+      background: rgba(57, 211, 83, 0.15) !important;
+      color: #39d353 !important;
+      border-color: #238636 !important;
+    }
+
+    .btn-sample {
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: #FBBF24;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 6px 14px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================= VIEW 1: BUILDER ======================= -->
+  <div id="view-builder" class="container-fluid px-1">
+    
+    <!-- Hero Header -->
+    <div class="text-center mb-4 pt-2">
+      <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill glass-panel mb-2">
+        <span class="pulse-dot"></span>
+        <span style="color: #FBBF24; font-weight: 700; font-size: 11px; letter-spacing: 1px;">STANDALONE ENGINE</span>
+      </div>
+      <h2 class="fw-bold text-gradient mb-1" style="font-size: 26px;">PortGenZ Studio</h2>
+      <p style="color: #FECDD3; font-size: 13px; margin-bottom: 12px;">Create high-impact engineering portfolios instantly</p>
+      
+      <button type="button" class="btn btn-sample" onclick="loadDemoProfile()">
+        ⚡ Auto-Fill Demo Profile
+      </button>
+    </div>
+
+    <!-- Form Container -->
+    <form id="portfolioForm" onsubmit="event.preventDefault(); renderLivePortfolio();" class="glass-panel p-3 p-md-4">
+      
+      <!-- Section 1: Avatar -->
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span class="section-badge">01</span>
+        <h5 class="fw-bold mb-0 text-white">Avatar & Identity</h5>
+      </div>
+
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <input class="d-none avatar-radio" type="radio" name="gender" id="avatarMale" value="male" checked>
+          <label class="avatar-select-card" for="avatarMale">
+            <img src="male.png" class="avatar-preview-img" alt="Male Avatar">
+            <div class="fw-bold text-white" style="font-size: 13px;">Male Persona</div>
+            <small style="color: #A37078; font-size: 11px;">3D Tech Avatar</small>
+          </label>
+        </div>
+        <div class="col-6">
+          <input class="d-none avatar-radio" type="radio" name="gender" id="avatarFemale" value="female">
+          <label class="avatar-select-card" for="avatarFemale">
+            <img src="female.png" class="avatar-preview-img" alt="Female Avatar">
+            <div class="fw-bold text-white" style="font-size: 13px;">Female Persona</div>
+            <small style="color: #A37078; font-size: 11px;">3D Tech Avatar</small>
+          </label>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Full Name *</label>
+          <input type="text" id="inputName" class="form-control" placeholder="e.g. Alex Rivera" required>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Headline / Tagline</label>
+          <input type="text" id="inputTagline" class="form-control" placeholder="e.g. Full-Stack Developer | Mobile & Web">
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Email *</label>
+          <input type="email" id="inputEmail" class="form-control" placeholder="alex.rivera@example.com" required>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">GitHub URL</label>
+          <input type="text" id="inputGithub" class="form-control" placeholder="https://github.com/alex">
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">LinkedIn URL</label>
+          <input type="text" id="inputLinkedin" class="form-control" placeholder="https://linkedin.com/in/alex">
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Executive Bio</label>
+          <textarea id="inputBio" class="form-control" rows="3" placeholder="A passionate software engineer focused on building elegant, performant mobile & web applications..."></textarea>
+        </div>
+      </div>
+
+      <!-- Section 2: Academics & Skills -->
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span class="section-badge">02</span>
+        <h5 class="fw-bold mb-0 text-white">Academics & Skills</h5>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Degree / Major</label>
+          <input type="text" id="inputDegree" class="form-control" placeholder="B.S. Computer Science">
+        </div>
+        <div class="col-8">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">College / University</label>
+          <input type="text" id="inputCollege" class="form-control" placeholder="University of Engineering">
+        </div>
+        <div class="col-4">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Year</label>
+          <input type="text" id="inputYear" class="form-control" placeholder="2023 - 2027">
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Core Skills (comma separated)</label>
+          <input type="text" id="inputSkillsCore" class="form-control" placeholder="Java, Python, Android, JavaScript, SQL">
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-bold" style="color: #FBBF24;">Tools & Frameworks (comma separated)</label>
+          <input type="text" id="inputSkillsTools" class="form-control" placeholder="Git, Docker, VS Code, Figma, Gradle">
+        </div>
+      </div>
+
+      <!-- Section 3: Projects -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <span class="section-badge">03</span>
+          <h5 class="fw-bold mb-0 text-white">Featured Projects</h5>
+        </div>
+        <button type="button" class="btn btn-sm btn-sample" onclick="addProjectField()">+ Add Project</button>
+      </div>
+
+      <div id="projects-container" class="mb-4">
+        <!-- Project items dynamically appended here -->
+      </div>
+
+      <!-- Section 4: Experience -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <span class="section-badge">04</span>
+          <h5 class="fw-bold mb-0 text-white">Experience & Roles</h5>
+        </div>
+        <button type="button" class="btn btn-sm btn-sample" onclick="addExperienceField()">+ Add Role</button>
+      </div>
+
+      <div id="experience-container" class="mb-4">
+        <!-- Experience items dynamically appended here -->
+      </div>
+
+      <!-- Section 5: Certificates -->
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex align-items-center gap-2">
+          <span class="section-badge">05</span>
+          <h5 class="fw-bold mb-0 text-white">Accreditations</h5>
+        </div>
+        <button type="button" class="btn btn-sm btn-sample" onclick="addCertField()">+ Add Certificate</button>
+      </div>
+
+      <div id="cert-container" class="mb-4">
+        <!-- Cert items dynamically appended here -->
+      </div>
+
+      <!-- Section 6: Theme Selection -->
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <span class="section-badge">06</span>
+        <h5 class="fw-bold mb-0 text-white">Visual Presentation Theme</h5>
+      </div>
+
+      <div class="row g-2 mb-4">
+        <div class="col-6">
+          <input class="d-none theme-radio" type="radio" name="theme" id="themeModern" value="modern" checked>
+          <label class="theme-card text-center w-100" for="themeModern">
+            <div class="fw-bold text-white" style="font-size: 13px;">Imperial Maroon</div>
+            <small style="color: #FBBF24; font-size: 11px;">Velvety Glass & Gold</small>
+          </label>
+        </div>
+        <div class="col-6">
+          <input class="d-none theme-radio" type="radio" name="theme" id="themeCyber" value="cyber">
+          <label class="theme-card text-center w-100" for="themeCyber">
+            <div class="fw-bold text-white" style="font-size: 13px;">Cyber HUD</div>
+            <small style="color: #34d399; font-size: 11px;">Dark Command Terminal</small>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-premium w-100 py-3 mb-2 shadow">
+        ✨ Build & Launch Live Portfolio
+      </button>
+
+    </form>
+  </div>
+
+  <!-- ======================= VIEW 2: LIVE PORTFOLIO ======================= -->
+  <div id="view-portfolio" style="display: none;">
+
+    <!-- Top Floating Toolbar -->
+    <div class="glass-panel sticky-top p-2 mb-3 d-flex justify-content-between align-items-center" style="z-index: 100;">
+      <button type="button" class="btn btn-sm btn-sample" onclick="switchToBuilder()">
+        ✏️ Edit Profile
+      </button>
+      <div class="d-flex gap-2">
+        <button type="button" class="btn btn-sm btn-sample" onclick="toggleTheme()">
+          🎨 Switch Theme
+        </button>
+        <button type="button" class="btn btn-sm btn-premium px-3" onclick="exportPDF()">
+          📄 Export PDF
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Render Container -->
+    <div id="portfolio-render"></div>
+
+  </div>
+
+  <script>
+    // In-memory data store with localStorage fallback
+    let profileData = {
+      gender: 'male',
+      name: '',
+      tagline: '',
+      email: '',
+      github: '',
+      linkedin: '',
+      bio: '',
+      degree: '',
+      college: '',
+      year: '',
+      skillsCore: '',
+      skillsTools: '',
+      projects: [],
+      experience: [],
+      certificates: [],
+      theme: 'modern'
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedData();
+      if (!profileData.projects.length) {
+        addProjectField();
+      }
+      if (!profileData.experience.length) {
+        addExperienceField();
+      }
+      if (!profileData.certificates.length) {
+        addCertField();
+      }
+    });
+
+    function addProjectField(p = {title: '', tech: '', link: '', desc: ''}) {
+      const container = document.getElementById('projects-container');
+      const div = document.createElement('div');
+      div.className = 'glass-panel p-3 mb-3 project-item';
+      div.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-warning text-dark fw-bold">Project</span>
+          <button type="button" class="btn btn-sm text-danger p-0" onclick="this.closest('.project-item').remove()">✕ Remove</button>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-12"><input type="text" class="form-control p-title" placeholder="Project Name" value="${p.title || ''}"></div>
+          <div class="col-7"><input type="text" class="form-control p-tech" placeholder="Tech Stack (e.g. Flutter, Firebase)" value="${p.tech || ''}"></div>
+          <div class="col-5"><input type="text" class="form-control p-link" placeholder="GitHub / Live Link" value="${p.link || ''}"></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <label class="small text-muted mb-0">Impact & Architecture</label>
+          <button type="button" class="btn btn-sm btn-ai-glow px-2 py-0" onclick="polishWithAI(this)">✨ Polish ATS</button>
+        </div>
+        <textarea class="form-control p-desc" rows="2" placeholder="Engineered key features...">${p.desc || ''}</textarea>
+      `;
+      container.appendChild(div);
+    }
+
+    function addExperienceField(e = {role: '', org: '', duration: '', detail: ''}) {
+      const container = document.getElementById('experience-container');
+      const div = document.createElement('div');
+      div.className = 'glass-panel p-3 mb-3 exp-item';
+      div.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <span class="badge bg-info text-dark fw-bold">Role</span>
+          <button type="button" class="btn btn-sm text-danger p-0" onclick="this.closest('.exp-item').remove()">✕ Remove</button>
+        </div>
+        <div class="row g-2 mb-2">
+          <div class="col-6"><input type="text" class="form-control e-role" placeholder="Role (e.g. Android Engineer)" value="${e.role || ''}"></div>
+          <div class="col-6"><input type="text" class="form-control e-org" placeholder="Company / Org" value="${e.org || ''}"></div>
+          <div class="col-12"><input type="text" class="form-control e-duration" placeholder="Duration (e.g. Jun 2024 - Present)" value="${e.duration || ''}"></div>
+        </div>
+        <textarea class="form-control e-detail" rows="2" placeholder="Key responsibilities and achievements...">${e.detail || ''}</textarea>
+      `;
+      container.appendChild(div);
+    }
+
+    function addCertField(c = {name: '', issuer: ''}) {
+      const container = document.getElementById('cert-container');
+      const div = document.createElement('div');
+      div.className = 'glass-panel p-3 mb-2 cert-item';
+      div.innerHTML = `
+        <div class="row g-2 align-items-center">
+          <div class="col-7"><input type="text" class="form-control c-name" placeholder="Certificate Name" value="${c.name || ''}"></div>
+          <div class="col-4"><input type="text" class="form-control c-issuer" placeholder="Issuing Body" value="${c.issuer || ''}"></div>
+          <div class="col-1 text-end"><button type="button" class="btn btn-sm text-danger p-0" onclick="this.closest('.cert-item').remove()">✕</button></div>
+        </div>
+      `;
+      container.appendChild(div);
+    }
+
+    // Built-in intelligent ATS action-verb transformer (runs locally & offline!)
+    function polishWithAI(btn) {
+      const block = btn.closest('.project-item');
+      const descEl = block.querySelector('.p-desc');
+      const title = block.querySelector('.p-title').value.trim() || 'Software Project';
+      const tech = block.querySelector('.p-tech').value.trim() || 'modern tech';
+      let raw = descEl.value.trim();
+
+      btn.innerText = '⏳ Polishing...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        let bullets = [];
+        if (!raw) {
+          bullets = [
+            `• Architected and developed ${title} leveraging ${tech} with high performance and modular design.`,
+            `• Engineered scalable asynchronous workflows, achieving sub-100ms response latency and optimized memory overhead.`,
+            `• Implemented clean architecture and automated test coverage, ensuring robust reliability in production environments.`
+          ];
+        } else {
+          const sentences = raw.split(/[.\n]/).map(s => s.trim()).filter(s => s.length > 5);
+          const verbs = ['Architected and engineered', 'Streamlined and optimized', 'Integrated and deployed', 'Spearheaded development of'];
+          bullets = sentences.slice(0, 3).map((s, idx) => {
+            const verb = verbs[idx % verbs.length];
+            return `• ${verb} ${s.charAt(0).toLowerCase() + s.slice(1)}.`;
+          });
+          if (bullets.length === 1) {
+            bullets.push(`• Optimized codebase efficiency using ${tech}, ensuring high reliability and responsive UX.`);
+            bullets.push(`• Implemented automated error handling and structured state management.`);
+          }
+        }
+
+        descEl.value = bullets.join('\n');
+        btn.innerText = '✨ Polish ATS';
+        btn.disabled = false;
+      }, 300);
+    }
+
+    function loadDemoProfile() {
+      document.getElementById('inputName').value = 'Nithishkumar L';
+      document.getElementById('inputTagline').value = 'CS Undergrad | Full-Stack & Android Systems Architect';
+      document.getElementById('inputEmail').value = 'nithish@example.com';
+      document.getElementById('inputGithub').value = 'https://github.com/nithish2311';
+      document.getElementById('inputLinkedin').value = 'https://linkedin.com/in/nithishkumar-l';
+      document.getElementById('inputBio').value = 'Passionate developer specializing in Android, Flutter, and Full-Stack cloud architectures. Adept at turning complex challenges into streamlined, high-performance applications with elegant UI/UX.';
+      document.getElementById('inputDegree').value = 'B.E. Computer Science & Engineering';
+      document.getElementById('inputCollege').value = 'Sri Krishna College of Technology';
+      document.getElementById('inputYear').value = '2023 - 2027';
+      document.getElementById('inputSkillsCore').value = 'Java, Kotlin, Python, JavaScript, C++, Dart, SQLite, SQL';
+      document.getElementById('inputSkillsTools').value = 'Android Studio, Flutter, Git, Docker, Flask, Postman, Linux';
+
+      document.getElementById('projects-container').innerHTML = '';
+      addProjectField({
+        title: 'PortGenZ Studio Next-Gen',
+        tech: 'Android SDK, Java, WebView, CSS Glassmorphism',
+        link: 'https://github.com/nithish2311/PortGenZ',
+        desc: '• Engineered a standalone mobile studio for instant ATS-ready portfolio generation with native PDF export.\n• Built smooth 60fps micro-animations, theme switching, and local offline state persistence.\n• Integrated responsive glassmorphism UI tailored for mobile ergonomics.'
+      });
+      addProjectField({
+        title: 'Bus Tracker Pro',
+        tech: 'Flutter, Firebase, GPS Telemetry',
+        link: 'https://github.com/nithish2311/bus_tracker',
+        desc: '• Developed live transit telemetry tracking with real-time ETA calculation and push notifications.\n• Optimized background location polling reducing battery consumption by 35%.'
+      });
+
+      document.getElementById('experience-container').innerHTML = '';
+      addExperienceField({
+        role: 'Mobile Systems Engineering Intern',
+        org: 'Tech Innovations Lab',
+        duration: 'May 2025 - Aug 2025',
+        detail: 'Architected native modules and automated performance profiling pipelines across Android release builds.'
+      });
+
+      document.getElementById('cert-container').innerHTML = '';
+      addCertField({ name: 'Google Android Certified Developer', issuer: 'Google' });
+      addCertField({ name: 'Algorithms & Data Structures Specialization', issuer: 'Coursera' });
+
+      saveToStorage();
+    }
+
+    function collectFormData() {
+      const gender = document.querySelector('input[name="gender"]:checked')?.value || 'male';
+      const theme = document.querySelector('input[name="theme"]:checked')?.value || 'modern';
+
+      const projects = [];
+      document.querySelectorAll('.project-item').forEach(el => {
+        const title = el.querySelector('.p-title').value.trim();
+        if (title) {
+          projects.push({
+            title,
+            tech: el.querySelector('.p-tech').value.trim(),
+            link: el.querySelector('.p-link').value.trim(),
+            desc: el.querySelector('.p-desc').value.trim()
+          });
+        }
+      });
+
+      const experience = [];
+      document.querySelectorAll('.exp-item').forEach(el => {
+        const role = el.querySelector('.e-role').value.trim();
+        if (role) {
+          experience.push({
+            role,
+            org: el.querySelector('.e-org').value.trim(),
+            duration: el.querySelector('.e-duration').value.trim(),
+            detail: el.querySelector('.e-detail').value.trim()
+          });
+        }
+      });
+
+      const certificates = [];
+      document.querySelectorAll('.cert-item').forEach(el => {
+        const name = el.querySelector('.c-name').value.trim();
+        if (name) {
+          certificates.push({
+            name,
+            issuer: el.querySelector('.c-issuer').value.trim()
+          });
+        }
+      });
+
+      profileData = {
+        gender,
+        name: document.getElementById('inputName').value.trim() || 'Software Engineer',
+        tagline: document.getElementById('inputTagline').value.trim(),
+        email: document.getElementById('inputEmail').value.trim(),
+        github: document.getElementById('inputGithub').value.trim(),
+        linkedin: document.getElementById('inputLinkedin').value.trim(),
+        bio: document.getElementById('inputBio').value.trim(),
+        degree: document.getElementById('inputDegree').value.trim(),
+        college: document.getElementById('inputCollege').value.trim(),
+        year: document.getElementById('inputYear').value.trim(),
+        skillsCore: document.getElementById('inputSkillsCore').value.trim(),
+        skillsTools: document.getElementById('inputSkillsTools').value.trim(),
+        projects,
+        experience,
+        certificates,
+        theme
+      };
+
+      saveToStorage();
+      return profileData;
+    }
+
+    function saveToStorage() {
+      try {
+        localStorage.setItem('portgenz_profile', JSON.stringify(profileData));
+      } catch(e) {}
+    }
+
+    function loadSavedData() {
+      try {
+        const raw = localStorage.getItem('portgenz_profile');
+        if (raw) {
+          profileData = JSON.parse(raw);
+          if (profileData.name) document.getElementById('inputName').value = profileData.name;
+          if (profileData.tagline) document.getElementById('inputTagline').value = profileData.tagline;
+          if (profileData.email) document.getElementById('inputEmail').value = profileData.email;
+          if (profileData.github) document.getElementById('inputGithub').value = profileData.github;
+          if (profileData.linkedin) document.getElementById('inputLinkedin').value = profileData.linkedin;
+          if (profileData.bio) document.getElementById('inputBio').value = profileData.bio;
+          if (profileData.degree) document.getElementById('inputDegree').value = profileData.degree;
+          if (profileData.college) document.getElementById('inputCollege').value = profileData.college;
+          if (profileData.year) document.getElementById('inputYear').value = profileData.year;
+          if (profileData.skillsCore) document.getElementById('inputSkillsCore').value = profileData.skillsCore;
+          if (profileData.skillsTools) document.getElementById('inputSkillsTools').value = profileData.skillsTools;
+
+          if (profileData.gender === 'female') {
+            document.getElementById('avatarFemale').checked = true;
+          }
+
+          if (profileData.projects?.length) {
+            document.getElementById('projects-container').innerHTML = '';
+            profileData.projects.forEach(p => addProjectField(p));
+          }
+          if (profileData.experience?.length) {
+            document.getElementById('experience-container').innerHTML = '';
+            profileData.experience.forEach(e => addExperienceField(e));
+          }
+          if (profileData.certificates?.length) {
+            document.getElementById('cert-container').innerHTML = '';
+            profileData.certificates.forEach(c => addCertField(c));
+          }
+        }
+      } catch(e) {}
+    }
+
+    function renderLivePortfolio() {
+      const data = collectFormData();
+      const container = document.getElementById('portfolio-render');
+      const isCyber = data.theme === 'cyber';
+
+      document.body.className = isCyber ? 'cyber-mode' : '';
+
+      const avatarSrc = data.gender === 'female' ? 'female.png' : 'male.png';
+      const coreSkillsList = data.skillsCore ? data.skillsCore.split(',').map(s => s.trim()).filter(s => s) : [];
+      const toolSkillsList = data.skillsTools ? data.skillsTools.split(',').map(s => s.trim()).filter(s => s) : [];
+
+      let projectsHtml = '';
+      data.projects.forEach(p => {
+        const linkHtml = p.link ? `<a href="${p.link}" target="_blank" class="badge bg-warning text-dark text-decoration-none">🔗 View Project</a>` : '';
+        const techPills = p.tech ? p.tech.split(',').map(t => `<span class="badge-core small me-1">${t.trim()}</span>`).join('') : '';
+        projectsHtml += `
+          <div class="glass-panel p-3 mb-3 project-card">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h6 class="fw-bold mb-0 text-white">${p.title}</h6>
+              ${linkHtml}
+            </div>
+            <div class="mb-2">${techPills}</div>
+            <p class="small text-muted mb-0" style="white-space: pre-line; line-height: 1.6;">${p.desc}</p>
+          </div>
+        `;
+      });
+
+      let expHtml = '';
+      data.experience.forEach(e => {
+        expHtml += `
+          <div class="glass-panel p-3 mb-2 exp-card">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold text-white">${e.role}</span>
+              <small style="color: #FBBF24;">${e.duration}</small>
+            </div>
+            <small class="text-muted d-block mb-1">${e.org}</small>
+            <p class="small text-muted mb-0">${e.detail}</p>
+          </div>
+        `;
+      });
+
+      let certHtml = '';
+      data.certificates.forEach(c => {
+        certHtml += `
+          <div class="col-12 col-md-6 mb-2">
+            <div class="glass-panel p-2 px-3 d-flex justify-content-between align-items-center">
+              <span class="small fw-semibold text-white">🏆 ${c.name}</span>
+              <span class="badge bg-dark border text-muted small">${c.issuer}</span>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = `
+        <!-- Hero Profile -->
+        <div class="glass-panel p-4 text-center mb-4">
+          <div class="hero-avatar-wrapper">
+            <img src="${avatarSrc}" class="hero-avatar-img" alt="Avatar">
+          </div>
+          <h2 class="fw-bold text-white mb-1">${data.name}</h2>
+          ${data.tagline ? `<div class="fw-semibold text-gradient mb-2" style="font-size: 14px;">${data.tagline}</div>` : ''}
+          <div class="small text-muted mb-3">
+            🎓 ${data.degree} • ${data.college} ${data.year ? `(${data.year})` : ''}
+          </div>
+
+          <!-- Contact buttons -->
+          <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+            ${data.email ? `<a href="mailto:${data.email}" class="btn btn-sm btn-sample">📧 ${data.email}</a>` : ''}
+            ${data.github ? `<a href="${data.github}" target="_blank" class="btn btn-sm btn-sample">🐙 GitHub</a>` : ''}
+            ${data.linkedin ? `<a href="${data.linkedin}" target="_blank" class="btn btn-sm btn-sample">💼 LinkedIn</a>` : ''}
+          </div>
+
+          ${data.bio ? `<p class="small text-muted mb-0 mx-auto" style="max-width: 600px; line-height: 1.7;">${data.bio}</p>` : ''}
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="row g-2 mb-4 text-center">
+          <div class="col-4">
+            <div class="glass-panel p-2">
+              <h4 class="fw-bold mb-0 text-gradient">${data.projects.length}</h4>
+              <small class="text-muted" style="font-size: 11px;">Projects</small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="glass-panel p-2">
+              <h4 class="fw-bold mb-0 text-gradient">${data.experience.length}</h4>
+              <small class="text-muted" style="font-size: 11px;">Roles</small>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="glass-panel p-2">
+              <h4 class="fw-bold mb-0 text-gradient">${data.certificates.length}</h4>
+              <small class="text-muted" style="font-size: 11px;">Honors</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Core Stack -->
+        ${coreSkillsList.length ? `
+        <div class="mb-4">
+          <h6 class="fw-bold mb-2 text-white">⚡ Technical Stack</h6>
+          <div class="d-flex flex-wrap gap-1">
+            ${coreSkillsList.map(s => `<span class="badge-core">${s}</span>`).join('')}
+            ${toolSkillsList.map(s => `<span class="badge-tool">${s}</span>`).join('')}
+          </div>
+        </div>
+        ` : ''}
+
+        <!-- Projects -->
+        ${data.projects.length ? `
+        <div class="mb-4">
+          <h6 class="fw-bold mb-2 text-white">🚀 Key Projects</h6>
+          ${projectsHtml}
+        </div>
+        ` : ''}
+
+        <!-- Experience -->
+        ${data.experience.length ? `
+        <div class="mb-4">
+          <h6 class="fw-bold mb-2 text-white">💼 Experience</h6>
+          ${expHtml}
+        </div>
+        ` : ''}
+
+        <!-- Certificates -->
+        ${data.certificates.length ? `
+        <div class="mb-4">
+          <h6 class="fw-bold mb-2 text-white">🏅 Certifications</h6>
+          <div class="row g-2">${certHtml}</div>
+        </div>
+        ` : ''}
+
+        <div class="text-center py-4">
+          <small class="text-muted">Generated with PortGenZ Studio • Next-Gen Engine</small>
+        </div>
+      `;
+
+      document.getElementById('view-builder').style.display = 'none';
+      document.getElementById('view-portfolio').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    function switchToBuilder() {
+      document.getElementById('view-portfolio').style.display = 'none';
+      document.getElementById('view-builder').style.display = 'block';
+      document.body.className = '';
+      window.scrollTo(0, 0);
+    }
+
+    function toggleTheme() {
+      profileData.theme = profileData.theme === 'modern' ? 'cyber' : 'modern';
+      saveToStorage();
+      renderLivePortfolio();
+    }
+
+    function exportPDF() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

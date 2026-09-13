@@ -1,0 +1,23 @@
+<resources>
+    <!-- Rich Maroon Theme Palette -->
+    <color name="primary">#58111A</color>
+    <color name="primary_dark">#33060C</color>
+    <color name="background">#240509</color>
+    <color name="card_background">#3D0B13</color>
+    <color name="surface_variant">#4E101B</color>
+
+    <!-- Warm Golden and Rose Accents tailored for Maroon -->
+    <color name="accent">#FBBF24</color>
+    <color name="accent_rose">#FB7185</color>
+    <color name="accent_crimson">#E11D48</color>
+    <color name="accent_gold">#F59E0B</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#FFF1F2</color>
+    <color name="text_secondary">#FECDD3</color>
+    <color name="text_muted">#A37078</color>
+
+    <!-- Action Buttons -->
+    <color name="button_accent">#881337</color>
+    <color name="button_accent_gold">#D97706</color>
+</resources>
